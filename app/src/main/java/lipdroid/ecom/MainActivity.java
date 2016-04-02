@@ -1,9 +1,11 @@
 package lipdroid.ecom;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,13 +15,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+import lipdroid.ecom.Adapters.ImagePagerAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SweetAlertDialog pDialog;
-
+    private AutoScrollViewPager viewPager;
+    private List<Integer> imageIdList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +59,38 @@ public class MainActivity extends AppCompatActivity
 //        pDialog.setTitleText("Loading");
 //        pDialog.setCancelable(true);
 //        pDialog.show();
+
+
+
+        //banner autoscroll
+        viewPager = (AutoScrollViewPager)findViewById(R.id.view_pager);
+
+        imageIdList = new ArrayList<Integer>();
+        imageIdList.add(R.drawable.banner1);
+        imageIdList.add(R.drawable.banner2);
+        imageIdList.add(R.drawable.banner3);
+        imageIdList.add(R.drawable.banner4);
+        viewPager.setAdapter(new ImagePagerAdapter(this, imageIdList).setInfiniteLoop(true));
+        viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
+
+        viewPager.setInterval(2000);
+        viewPager.startAutoScroll();
+        viewPager.setCurrentItem(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % imageIdList.size());
+
+        // the more properties whose you can set
+        // // set whether stop auto scroll when touching, default is true
+        // viewPager.setStopScrollWhenTouch(false);
+        // // set whether automatic cycle when auto scroll reaching the last or first item
+        // // default is true
+        // viewPager.setCycle(false);
+        // /** set auto scroll direction, default is AutoScrollViewPager#RIGHT **/
+        // viewPager.setDirection(AutoScrollViewPager.LEFT);
+        // // set how to process when sliding at the last or first item
+        // // default is AutoScrollViewPager#SLIDE_BORDER_NONE
+        // viewPager.setBorderProcessWhenSlide(AutoScrollViewPager.SLIDE_BORDER_CYCLE);
+        // viewPager.setScrollDurationFactor(3);
+        // viewPager.setBorderAnimation(false);
+
     }
 
     @Override
@@ -128,4 +169,32 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {}
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // stop auto scroll when onPause
+        viewPager.stopAutoScroll();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // start auto scroll when onResume
+        viewPager.startAutoScroll();
+    }
+
 }
