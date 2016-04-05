@@ -31,6 +31,11 @@ dependencies {
     compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
+    compile files('libs/scmodule-universal-image-loader-1.9.3.jar')
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile files('libs/scmodule-apache-mime4j-0.6.jar')
+    compile files('libs/scmodule-httpmime-4.0.1.jar')
+
 
 
 
