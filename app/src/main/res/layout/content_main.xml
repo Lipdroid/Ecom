@@ -6,10 +6,5 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior" tools:showIn="@layout/app_bar_main"
     tools:context=".MainActivity">
 
-    <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
-        android:id="@+id/view_pager"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:background="@android:color/background_dark"
-        android:layout_height="160dp" />
+
 </RelativeLayout>
